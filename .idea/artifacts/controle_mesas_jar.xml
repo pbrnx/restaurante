@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="controle_mesas:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/controle_mesas_jar</output-path>
+    <root id="archive" name="controle_mesas.jar">
+      <element id="module-output" name="controle_mesas" />
+    </root>
+  </artifact>
+</component>
