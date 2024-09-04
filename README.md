@@ -1,8 +1,5 @@
 # Aplicação java simples para gerenciar e controlar mesas de um restaurante fictício.
 
-![image](https://github.com/user-attachments/assets/8a270b02-a631-490e-8429-490553221f60)
-
-
 Basta rodar o arquivo Jar em uma máquina com o JRE instalado.
 
 ![image](https://github.com/user-attachments/assets/4eb69aa0-fdf7-450d-8133-2ea6082995ba)
