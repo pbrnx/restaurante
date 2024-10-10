@@ -3,6 +3,7 @@
 Basta rodar o arquivo Jar em uma máquina com o JRE instalado.
 
 Primeiro, logue com sua conta Oracle Database da FIAP. A aplicação depende disso para funcionar corretamente. As tabelas necessárias serão criadas automaticamente.
+
 ![image](https://github.com/user-attachments/assets/1bafef2e-4d11-4d0d-a250-0283697c135e)
 
 
