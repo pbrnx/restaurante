@@ -22,6 +22,11 @@ Digite o número da nova mesa, seu status inicial, o número da comanda e a quan
 ![image](https://github.com/user-attachments/assets/560cca64-a19c-43fe-8a61-4da8eaacee5f)
 
 
+## Editando os valores
+Você pode editar os valores clicando nos campos e digitando. O número da mesa é um atributo identificador e não deve ser alterado.
+![image](https://github.com/user-attachments/assets/61b8cbba-a5a6-4c69-8f62-5051351a53a6)
+![image](https://github.com/user-attachments/assets/b6668740-78bb-4693-981f-6a8bc1e54c9e)
+
 
 ## Remover mesa
 Basta digitar o número e remover
