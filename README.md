@@ -25,4 +25,5 @@ Digite o número da nova mesa, seu status inicial, o número da comanda e a quan
 
 ## Remover mesa
 Basta digitar o número e remover
+
 ![image](https://github.com/user-attachments/assets/3b93bfc6-8204-4725-8555-c94017ac082a)
