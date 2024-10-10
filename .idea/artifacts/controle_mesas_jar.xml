@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/controle_mesas_jar</output-path>
     <root id="archive" name="controle_mesas.jar">
       <element id="module-output" name="controle_mesas" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ojdbc11.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/ojdbc11.jar" />
     </root>
   </artifact>
 </component>

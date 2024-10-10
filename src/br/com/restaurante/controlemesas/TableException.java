@@ -1,3 +1,4 @@
+//TableException.java
 package br.com.restaurante.controlemesas;
 
 public class TableException extends Exception {

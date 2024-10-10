@@ -10,7 +10,16 @@
     <orderEntry type="module-library" exported="" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/jfreechart-1.0.19-demo.jar!/" />
+          <root url="jar://$MODULE_DIR$/../jfreechart-1.0.19-demo.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/ojdbc11.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

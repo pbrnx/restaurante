@@ -1,6 +1,9 @@
+//TableView.java
 package br.com.restaurante.controlemesas;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -23,10 +26,20 @@ public class TableView extends JFrame {
     }
 
     private void initializeUI() {
-        tableModel = new DefaultTableModel(new Object[]{"Número da Mesa", "Status"}, 0) {
+        tableModel = new DefaultTableModel(new Object[]{"Número da Mesa", "Status", "Número da Comanda", "Quantidade de Pessoas"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                // Todas as colunas são editáveis
+                return true;
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int row, int column) {
+                // Converte o valor para o tipo correto antes de definir
+                if (column == 0 || column == 2 || column == 3) {
+                    aValue = Integer.parseInt(aValue.toString());
+                }
+                super.setValueAt(aValue, row, column);
             }
         };
         table = new JTable(tableModel);
@@ -34,16 +47,35 @@ public class TableView extends JFrame {
         table.setRowHeight(30);
         table.getColumnModel().getColumn(0).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setPreferredWidth(150);
+        table.getColumnModel().getColumn(2).setPreferredWidth(150);
+        table.getColumnModel().getColumn(3).setPreferredWidth(150);
 
         loadTableData();
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        // Adicionar JComboBox como editor para a coluna de status
+        JComboBox<String> statusComboBox = new JComboBox<>(new String[]{"Disponível", "Indisponível", "Reservada"});
+        table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(statusComboBox));
 
-        JButton btnUpdate = new JButton("Atualizar Status");
-        btnUpdate.addActionListener(e -> {
-            updateStatus();
-            updateStatusLabel();
+        // Listener para atualizar o banco de dados ao finalizar a edição de uma célula
+        tableModel.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int tableNumber = Integer.parseInt(tableModel.getValueAt(row, 0).toString());
+                    String status = tableModel.getValueAt(row, 1).toString();
+                    int numeroComanda = Integer.parseInt(tableModel.getValueAt(row, 2).toString());
+                    int quantidadePessoas = Integer.parseInt(tableModel.getValueAt(row, 3).toString());
+                    try {
+                        controller.updateTableStatus(tableNumber, status, numeroComanda, quantidadePessoas);
+                    } catch (TableException ex) {
+                        JOptionPane.showMessageDialog(TableView.this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
         });
+
+        JScrollPane scrollPane = new JScrollPane(table);
 
         JButton btnAdd = new JButton("Adicionar Mesa");
         btnAdd.addActionListener(e -> {
@@ -58,18 +90,15 @@ public class TableView extends JFrame {
         });
 
         JPanel panel = new JPanel();
-        panel.add(btnUpdate);
         panel.add(btnAdd);
         panel.add(btnRemove);
 
-        // Adiciona a label para mostrar as porcentagens
         statusLabel = new JLabel();
-        updateStatusLabel(); // Inicializa a label com as porcentagens atuais
+        updateStatusLabel();
 
-        // Adiciona os componentes ao layout
         add(scrollPane, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
-        add(statusLabel, BorderLayout.NORTH); // Adiciona a label na parte superior da janela
+        add(statusLabel, BorderLayout.NORTH);
     }
 
     private void updateStatusLabel() {
@@ -104,64 +133,14 @@ public class TableView extends JFrame {
 
     private void loadTableData() {
         List<Table> tables = controller.getTables();
-        Collections.sort(tables, Comparator.comparingInt(Table::getTableNumber)); // Ordena as mesas por número
+        Collections.sort(tables, Comparator.comparingInt(Table::getTableNumber));
 
         for (Table t : tables) {
-            tableModel.addRow(new Object[]{t.getTableNumber(), t.getStatus()});
-        }
-    }
-
-    private void updateStatus() {
-        String input = JOptionPane.showInputDialog(this, "Digite o número da mesa para atualizar o status:");
-        if (input != null && !input.trim().isEmpty()) {
-            int tableNumber;
-            try {
-                tableNumber = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Número inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            String newStatus = (String) JOptionPane.showInputDialog(
-                    this,
-                    "Selecione o novo status:",
-                    "Atualizar Status",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new String[]{"Disponível", "Indisponível", "Reservada"},
-                    "Disponível"
-            );
-
-            if (newStatus != null) {
-                try {
-                    controller.updateTableStatus(tableNumber, newStatus);
-                    updateTableModel();
-                    JOptionPane.showMessageDialog(this, "Status atualizado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                } catch (TableException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+            tableModel.addRow(new Object[]{t.getTableNumber(), t.getStatus(), t.getNumeroComanda(), t.getQuantidadePessoas()});
         }
     }
 
     private void addNewTables() {
-        String input = JOptionPane.showInputDialog(this, "Quantas mesas você gostaria de adicionar?");
-        if (input != null && !input.trim().isEmpty()) {
-            int numberOfTables;
-            try {
-                numberOfTables = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Número inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            for (int i = 0; i < numberOfTables; i++) {
-                addSingleTable();
-            }
-        }
-    }
-
-    private void addSingleTable() {
         String input = JOptionPane.showInputDialog(this, "Digite o número da nova mesa:");
         if (input != null && !input.trim().isEmpty()) {
             int tableNumber;
@@ -183,8 +162,14 @@ public class TableView extends JFrame {
             );
 
             if (status != null) {
+                String comandaInput = JOptionPane.showInputDialog(this, "Digite o número da comanda:");
+                int numeroComanda = comandaInput != null && !comandaInput.trim().isEmpty() ? Integer.parseInt(comandaInput) : 0;
+
+                String pessoasInput = JOptionPane.showInputDialog(this, "Digite a quantidade de pessoas:");
+                int quantidadePessoas = pessoasInput != null && !pessoasInput.trim().isEmpty() ? Integer.parseInt(pessoasInput) : 0;
+
                 try {
-                    controller.addNewTable(tableNumber, status);
+                    controller.addNewTable(tableNumber, status, numeroComanda, quantidadePessoas);
                     updateTableModel();
                     JOptionPane.showMessageDialog(this, "Mesa adicionada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 } catch (TableException ex) {
@@ -235,7 +220,7 @@ public class TableView extends JFrame {
                         cell.setForeground(Color.RED);
                         break;
                     case "Reservada":
-                        cell.setForeground(Color.orange);
+                        cell.setForeground(Color.ORANGE);
                         break;
                     default:
                         cell.setForeground(Color.BLACK);
