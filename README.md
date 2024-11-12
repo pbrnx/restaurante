@@ -2,24 +2,33 @@
 
 Basta rodar o arquivo Jar em uma máquina com o JRE instalado.
 
-![image](https://github.com/user-attachments/assets/4eb69aa0-fdf7-450d-8133-2ea6082995ba)
+Primeiro, logue com sua conta Oracle Database da FIAP. A aplicação depende disso para funcionar corretamente. As tabelas necessárias serão criadas automaticamente.
+
+![image](https://github.com/user-attachments/assets/1bafef2e-4d11-4d0d-a250-0283697c135e)
+
+
 
 ## Atualizar status
-Selecione a mesa e o status desejado
+Clique no status referente à mesa que deseja atualizar e clique na opçao desejada no popup
 
-
-![image](https://github.com/user-attachments/assets/50b340e3-fe4f-4bd6-b6d2-aae0acf4139e)
+![image](https://github.com/user-attachments/assets/982f1374-a4c8-4fed-85ba-9d6b71959ac2)
+![image](https://github.com/user-attachments/assets/d9715939-816d-445f-a5b1-321b7d312fc1)
 
 
 ## Adicionar mesa
-Digite o número de mesas a serem adicionadas e defina seus números e status
+Digite o número da nova mesa, seu status inicial, o número da comanda e a quantidade de pessoas.
+![image](https://github.com/user-attachments/assets/4c6130db-020b-4532-8a0f-24fac1250ddb)
+![image](https://github.com/user-attachments/assets/68d87591-ef39-43d2-90af-9a92641c21d4)
+![image](https://github.com/user-attachments/assets/560cca64-a19c-43fe-8a61-4da8eaacee5f)
 
 
-![image](https://github.com/user-attachments/assets/1eab42d5-82eb-444a-a4cd-2ca7ff94a4b6)
-![image](https://github.com/user-attachments/assets/3117ce35-6f9d-4bb3-ac19-ebee0756e2b6)
-![image](https://github.com/user-attachments/assets/aed1953f-adfc-4c66-97b5-428be8dce106)
-![image](https://github.com/user-attachments/assets/fe1ae677-e4a5-4747-90f1-19c49ca24d37)
+## Editando os valores
+Você pode editar os valores clicando nos campos e digitando. O número da mesa é um atributo identificador e não deve ser alterado.
+![image](https://github.com/user-attachments/assets/61b8cbba-a5a6-4c69-8f62-5051351a53a6)
+![image](https://github.com/user-attachments/assets/b6668740-78bb-4693-981f-6a8bc1e54c9e)
+
 
 ## Remover mesa
 Basta digitar o número e remover
+
 ![image](https://github.com/user-attachments/assets/3b93bfc6-8204-4725-8555-c94017ac082a)
